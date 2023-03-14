@@ -1,0 +1,25 @@
+1
+
+select film.film_id, film.title from film, category, film_category
+where film.film_id=film_category.film_id and category.category_id=film_category.category_id 
+and (film.rating = 'R' or film.rating = 'PG-13') and (category.name='Horror' or category.name='Sci-Fi')
+and  film.film_id not in (
+select distinct film.film_id
+from film
+inner join inventory on film.film_id = inventory.film_id
+inner join rental on rental.inventory_id=inventory.inventory_id);
+
+2
+
+select store.store_id
+from store, staff, payment
+where store.manager_staff_id = staff.staff_id
+and staff.staff_id = payment.staff_id
+group by store.store_id
+order by sum(payment.amount) desc
+limit 1
+
+
+////////////////////////
+
+We need to indexize payment.staff_id with hashing and payment.amount with b_tree 

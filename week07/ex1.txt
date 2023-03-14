@@ -1,10 +1,20 @@
 1
 EXPLAIN ANALYZE SELECT * FROM customer;
+
+"QUERY PLAN"
+"Seq Scan on customer  (cost=0.00..204.88 rows=4988 width=210) (actual time=0.007..1.347 rows=5090 loops=1)"
+"Planning Time: 0.291 ms"
+"Execution Time: 1.655 ms"
 2
 CREATE INDEX idx_address ON customer(address);
 3
 CREATE INDEX idx_name ON customer USING hash (name);
 4
 EXPLAIN ANALYZE SELECT * FROM customer;
+
+"QUERY PLAN"
+"Seq Scan on customer  (cost=0.00..205.90 rows=5090 width=211) (actual time=0.007..0.425 rows=5090 loops=1)"
+"Planning Time: 0.041 ms"
+"Execution Time: 0.693 ms"
 5
-Yes, there is. Execustion time was x2 faster than the prevoius one.
+Yes, there is. Execution time of the last query is 2.5 times faster than the prevoius one.
