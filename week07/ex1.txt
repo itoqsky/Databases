@@ -1,0 +1,10 @@
+1
+EXPLAIN ANALYZE SELECT * FROM customer;
+2
+CREATE INDEX idx_address ON customer(address);
+3
+CREATE INDEX idx_name ON customer USING hash (name);
+4
+EXPLAIN ANALYZE SELECT * FROM customer;
+5
+Yes, there is. Execustion time was x2 faster than the prevoius one.
