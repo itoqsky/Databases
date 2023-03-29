@@ -1,7 +1,9 @@
+1)
                                                         Read committed
 
 Q1: Do both terminals show the same information? Explain the reason?
 A1: No, because first one reads from committed transactions and second one reads from its own uncommitted transaction.
+Step 5: after commiting second transaction commits, both of them will see the same result.
 
  username |     fullname     | balance | group_id 
 ----------+------------------+---------+----------
@@ -20,29 +22,36 @@ A1: No, because first one reads from committed transactions and second one reads
  ajones   | Alice Jones      |      82 |        1
 
  Q2: Explain the output of second result?
- A2: Second transaction waits in queue while transactions before it in process.
+ A2: Second transaction waits in queue while transactions before it is in process.
 
                                                         Repeatable read
 
 Q1: Do both terminals show the same information? Explain the reason?
 A1: No, because first one reads from the snapshot the database has taken at the start of transaction. 
-That means, even if second transaction commits after, first one sees the same as before.
+Step 5: after commiting second transaction commits, both of them will not see the same result. Because, first one sees the same as before because of the reasons above.
 
- username |     fullname     | balance | group_id 
-----------+------------------+---------+----------
- jones    | Alice Jones      |      82 |        1
- bitdiddl | Ben Bitdiddle    |      65 |        1
- mike     | Michael Dole     |      73 |        2
- alyssa   | Alyssa P. Hacker |      79 |        3
- bbrown   | Bob Brown        |     100 |        3
+Q2: Explain the output of second result?
+A2: update was done successfully.
 
- username |     fullname     | balance | group_id 
-----------+------------------+---------+----------
- bitdiddl | Ben Bitdiddle    |      65 |        1
- mike     | Michael Dole     |      73 |        2
- alyssa   | Alyssa P. Hacker |      79 |        3
- bbrown   | Bob Brown        |     100 |        3
- ajones   | Alice Jones      |      82 |        1
+Step 7: first one's update cannot be done because the second transaction was updated and committed while uncommitted first transaction still sees the snapshot before the commit.
+Step 8: the commit of first transaction causes rollback because the reason in the step 7.
 
- Q2: Explain the output of second result?
- A2: Second transaction waits in queue while transactions before it in process.
+2)
+Read committed:
+• Start a transaction (T1 & T2)
+• Read accounts with group_id=2 (T1)
+• Move Bob to group 2 (T2) 
+• Read accounts with group_id=2 (T1) -> the same result as before.
+• Update selected accounts balances by +15 (T1) -> updated record(s) which get before.
+• Commit transaction (T1 & T2) -> everything was updated in queue, and the balance of moved Bob is unchanged.
+
+
+Repeatable read:
+• Start a transaction (T1 & T2)
+• Read accounts with group_id=2 (T1)
+• Move Bob to group 2 (T2) 
+• Read accounts with group_id=2 (T1)
+• Update selected accounts balances by +15 (T1)
+• Commit transaction (T1 & T2)
+
+The result is same as in Read committed.
