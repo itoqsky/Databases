@@ -14,7 +14,7 @@ def query_restaurants_on_prospect_park_west():
         else:
             # db.restaurants.delete_one(document)
             document["grades"].append({"date" : datetime.datetime(2023, 4, 4, 0, 0), 'grade':'A', 'score': 100})
-            db.restaurants.update_one({"_id": document["_id"]}, {"$set": document})
+            db.restaurants.update_one({"_id": document["_id"]}, {"$set": document}, upsert=False)
             # db.restaurants.insert_one(document)
 query_restaurants_on_prospect_park_west()
 
