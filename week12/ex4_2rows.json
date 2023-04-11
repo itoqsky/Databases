@@ -1,0 +1,48 @@
+[
+  {
+    "collect(p)": [
+      {
+        "identity": 4,
+        "labels": [
+          "Fighter"
+        ],
+        "properties": {
+          "name": "Daniel Cormier",
+          "weight": "205",
+          "losing": 1
+        },
+        "elementId": "4:b7b75f7d-795a-4ccc-a486-6aac1b800ba6:4"
+      },
+      {
+        "identity": 9,
+        "labels": [
+          "Fighter"
+        ],
+        "properties": {
+          "name": "Brock Lesnar",
+          "weight": "230",
+          "losing": 1
+        },
+        "elementId": "4:b7b75f7d-795a-4ccc-a486-6aac1b800ba6:9"
+      }
+    ],
+    "size(collect(p))": 2
+  },
+  {
+    "collect(p)": [
+      {
+        "identity": 0,
+        "labels": [
+          "Fighter"
+        ],
+        "properties": {
+          "winning": 1,
+          "name": "Khabib Nurmagomedov",
+          "weight": "155"
+        },
+        "elementId": "4:b7b75f7d-795a-4ccc-a486-6aac1b800ba6:0"
+      }
+    ],
+    "size(collect(p))": 1
+  }
+]

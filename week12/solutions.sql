@@ -13,18 +13,34 @@ create (p1)-[:beats]->(p2),  (p2)-[:beats]->(p3),
 (p11)-[:beats]->(p6),(p6)-[:beats]->(p7),
 (p6)-[:beats]->(p11),(p7)-[:beats]->(p4)
 
-//ex2
-1)
+-- ex2
+-- 1)
 
 match (f:Fighter)-[:beats]->()
 where f.weight='155' or f.weight='170' or f.weight='185'
 return distinct f
 
-2)
+-- 2)
 
 match (f)-[:beats]->()-[:beats]->(f) return distinct f
 
-4)
-match(w:Fighter)-[:beats]->(l:Fighter) 
-with count(l) as wins, count(w) as loss,  w as w, l as l
-set w.winning = wins, l.losing = loss return w;
+-- 3)
+match (f:Fighter)-[]-()
+with f, count(f) as fights
+return f
+order by fights desc
+limit 1 
+
+-- 4)
+match (p:Fighter)
+where not (p)-[:beats]->()
+return collect(p), 
+       size(collect(p))
+union
+match (p:Fighter)
+where not ()-[:beats]->(p)
+return collect(p), 
+       size(collect(p))
+
+-- match (p:Fighter) where not (p)-[:beats]->() or not ()-[:beats]->(p)
+--     return p;
